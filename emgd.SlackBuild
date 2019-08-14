@@ -1,0 +1,21 @@
+
+
+T=/tmp/Sbo/emgd
+rm -rf $T
+
+installpkg -root $T emgd-drm*z 
+
+    export KERNELVER=$KERNEL
+    export KERNELDIR=$KERNELPATH
+    export INSTALLDIR=$T/out/lib/modules/$KERNEL/kernel/drivers/gpu/drm/emgd
+
+#Make a module
+(cd $T/usr/src/emgd-1.16; make && make install)
+
+#Install ALL xorg-1.9
+#installpkg -root $T/out xserver-1.9/*z
+
+#Make a packets
+(cd $T/out; makepkg -l y  -c y $OUTPUT/emgd-$KERNEL.tgz)
+
+#export OUTPUT=$t/tgz
